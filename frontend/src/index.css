@@ -1,0 +1,283 @@
+/* =============================================================
+   Driver Fatigue & Distraction Monitor — simple light theme
+   Single-screen layout: the page never scrolls, everything fits.
+============================================================= */
+
+:root {
+  --bg: #f1f5f9;
+  --card: #ffffff;
+  --border: #e2e8f0;
+  --text: #0f172a;
+  --muted: #64748b;
+  --blue: #2563eb;
+  --green: #059669;
+  --amber: #d97706;
+  --red: #dc2626;
+  --radius: 12px;
+  --font: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  overflow: hidden; /* no page scroll: layout is sized to the viewport */
+}
+
+button { font-family: inherit; }
+
+/* ---------- Layout shell ---------- */
+.app-container {
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px 14px;
+  max-width: 1700px;
+  margin: 0 auto;
+}
+
+.panel {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+}
+
+/* ---------- Top bar ---------- */
+.top-bar {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 8px 14px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+}
+
+.top-title { display: flex; align-items: center; gap: 10px; }
+.top-title-main { font-size: 1.05rem; font-weight: 700; }
+.top-title-sub { font-size: 0.75rem; color: var(--muted); margin-top: 1px; }
+.top-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+.status-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 12px; border-radius: 999px;
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px;
+  color: var(--muted); background: #f1f5f9; border: 1px solid var(--border);
+}
+.status-pill.on { color: var(--green); background: #ecfdf5; border-color: #a7f3d0; }
+
+/* ---------- Buttons ---------- */
+.btn-primary, .btn-secondary, .btn-danger, .btn-start {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 7px 14px; border-radius: 8px;
+  font-size: 0.85rem; font-weight: 600; cursor: pointer;
+  white-space: nowrap; transition: background 0.15s, border-color 0.15s;
+}
+.btn-primary { background: var(--blue); color: #fff; border: 1px solid var(--blue); }
+.btn-primary:hover { background: #1d4ed8; }
+.btn-start { background: var(--green); color: #fff; border: 1px solid var(--green); }
+.btn-start:hover { background: #047857; }
+.btn-danger { background: var(--red); color: #fff; border: 1px solid var(--red); }
+.btn-danger:hover { background: #b91c1c; }
+.btn-secondary { background: #fff; color: #334155; border: 1px solid #cbd5e1; }
+.btn-secondary:hover { background: #f1f5f9; border-color: #94a3b8; }
+button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* Language toggle (English / தமிழ்) */
+.lang-toggle-button {
+  display: inline-flex; padding: 3px; gap: 2px;
+  background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 999px;
+}
+.lang-toggle-option {
+  border: none; background: transparent; cursor: pointer;
+  padding: 5px 14px; border-radius: 999px;
+  font-size: 0.82rem; font-weight: 700; color: var(--muted);
+  transition: background 0.15s, color 0.15s;
+}
+.lang-toggle-option:hover { color: var(--text); }
+.lang-toggle-option.active { background: var(--blue); color: #fff; }
+
+/* ---------- Main grid ---------- */
+.dashboard-main-grid {
+  flex: 1 1 0;
+  min-height: 0; /* lets children shrink instead of overflowing */
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: 10px;
+}
+
+/* ---------- Left: controls + video ---------- */
+.left-panel {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}
+
+.controls-row {
+  flex: 0 0 auto;
+  display: flex; flex-wrap: wrap; align-items: center;
+  justify-content: space-between; gap: 8px;
+}
+.source-tabs, .action-btn-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+.landmark-switch {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.8rem; color: #475569; cursor: pointer; user-select: none;
+}
+.landmark-switch input { accent-color: var(--blue); cursor: pointer; }
+
+.nthu-strip { flex: 0 0 auto; display: flex; flex-wrap: wrap; gap: 6px; }
+.nthu-chip {
+  padding: 5px 10px; border-radius: 999px; cursor: pointer;
+  font-size: 0.76rem; font-weight: 600; color: #475569;
+  background: #fff; border: 1px solid #cbd5e1;
+}
+.nthu-chip:hover { border-color: var(--blue); color: var(--blue); }
+.nthu-chip.active { background: #eff6ff; border-color: var(--blue); color: var(--blue); }
+
+.error-banner {
+  flex: 0 0 auto; padding: 7px 12px; border-radius: 8px;
+  font-size: 0.8rem; font-weight: 600;
+  background: #fef2f2; border: 1px solid #fca5a5; color: #991b1b;
+}
+
+/* The stage takes all leftover height; the 4:3 video is the largest box that fits */
+.video-stage {
+  flex: 1 1 0;
+  min-height: 0;
+  container-type: size;
+  display: flex; align-items: center; justify-content: center;
+  background: #e2e8f0;
+  border-radius: 10px;
+}
+.video-wrapper {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  width: min(100cqw, calc(100cqh * 4 / 3));
+  background: #0f172a;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.video-elem { width: 100%; height: 100%; object-fit: cover; display: block; }
+.overlay-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+.video-tag {
+  position: absolute; top: 8px; padding: 3px 9px; border-radius: 6px;
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.4px;
+}
+.video-tag-left { left: 8px; background: rgba(15, 23, 42, 0.7); color: #e2e8f0; }
+.video-tag-right { right: 8px; background: #059669; color: #fff; }
+
+/* ---------- Right column ---------- */
+.right-col {
+  min-height: 0;
+  display: flex; flex-direction: column; gap: 10px;
+}
+
+.status-card {
+  flex: 0 0 auto;
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px; border-radius: var(--radius);
+  border: 1px solid; transition: background 0.2s, border-color 0.2s;
+}
+.status-card.alert { background: #ecfdf5; border-color: #6ee7b7; color: #065f46; }
+.status-card.drowsiness { background: #fef2f2; border-color: #fca5a5; color: #991b1b; animation: pulse-soft 1.2s infinite; }
+.status-card.distraction { background: #fffbeb; border-color: #fcd34d; color: #92400e; animation: pulse-soft 1.4s infinite; }
+
+@keyframes pulse-soft {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+  50% { box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.18); }
+}
+
+.status-badge-icon {
+  flex: 0 0 auto; width: 46px; height: 46px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255, 255, 255, 0.7); color: currentColor;
+}
+.status-text { min-width: 0; }
+.status-content-title { font-size: 1.05rem; font-weight: 800; letter-spacing: 0.3px; }
+.status-content-desc { font-size: 0.85rem; font-weight: 500; margin-top: 2px; opacity: 0.9; }
+
+.status-chip-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.status-chip {
+  display: inline-flex; align-items: center; gap: 5px; margin-top: 6px;
+  padding: 3px 9px; border-radius: 6px; font-size: 0.74rem; font-weight: 600;
+  background: rgba(255, 255, 255, 0.75); border: 1px solid rgba(15, 23, 42, 0.12); color: #334155;
+}
+.status-chip-row .status-chip { margin-top: 0; }
+.status-chip.warn { background: #fef3c7; border-color: #fcd34d; color: #92400e; }
+.status-chip.ok { background: #d1fae5; border-color: #6ee7b7; color: #065f46; }
+
+.gauge-card {
+  flex: 0 0 auto;
+  display: flex; align-items: center; justify-content: center; gap: 18px;
+  padding: 8px 14px;
+}
+.gauge-label { font-size: 0.8rem; font-weight: 600; color: var(--muted); }
+.gauge-trend { font-size: 1.1rem; font-weight: 700; margin-top: 2px; }
+.gauge-sub { font-size: 0.74rem; color: var(--muted); margin-top: 2px; }
+
+/* Telemetry cards fill the remaining height in a 2×3 grid */
+.telemetry-grid {
+  flex: 1 1 0;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.telemetry-card {
+  padding: 8px 12px;
+  display: flex; flex-direction: column; justify-content: center;
+  min-height: 0; overflow: hidden;
+}
+.telemetry-card-title {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 0.74rem; font-weight: 700; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.4px;
+}
+.telemetry-card-val { font-size: 1.45rem; font-weight: 800; color: var(--text); margin: 3px 0 2px; line-height: 1.1; }
+.telemetry-card-val.gaze { font-size: 1.1rem; }
+.telemetry-card-val .unit { font-size: 0.75rem; font-weight: 600; color: var(--muted); }
+.telemetry-card-sub { display: flex; justify-content: space-between; gap: 8px; font-size: 0.74rem; color: var(--muted); }
+
+.baseline-strip {
+  flex: 0 0 auto;
+  display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap;
+  padding: 7px 14px; font-size: 0.78rem; color: var(--muted);
+}
+.baseline-strip strong { color: var(--text); }
+.baseline-strip code { color: var(--blue); font-weight: 700; }
+
+/* ---------- Small / short screens ---------- */
+@media (max-height: 760px) {
+  .telemetry-card-val { font-size: 1.2rem; }
+  .status-badge-icon { width: 38px; height: 38px; }
+  .gauge-card svg { width: 76px; height: 76px; }
+}
+
+/* Narrow screens: stack, and allow normal scrolling since it cannot fit one screen */
+@media (max-width: 900px) {
+  body { overflow-y: auto; }
+  .app-container { height: auto; min-height: 100dvh; }
+  .dashboard-main-grid { grid-template-columns: 1fr; }
+  .video-stage { flex: none; height: auto; container-type: normal; }
+  .video-wrapper { width: 100%; }
+  .telemetry-grid { grid-template-rows: none; }
+  .telemetry-card { padding: 10px 12px; }
+}

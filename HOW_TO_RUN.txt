@@ -1,0 +1,71 @@
+================================================================================
+AI-BASED DRIVER FATIGUE & DROWSINESS PREDICTION SYSTEM
+Project Structure & Direct Execution Guide (No Virtual Environment Needed!)
+================================================================================
+
+PROJECT STRUCTURE:
+--------------------------------------------------------------------------------
+This project is cleanly divided into two independent folders:
+
+1. backend/
+   Contains the Python FastAPI inference server, Computer Vision pipeline,
+   MediaPipe landmark processing, trained ML models (Random Forest, SVM, LR),
+   and NTHU-DDD benchmark datasets.
+
+2. frontend/
+   Contains the modern React 19 + Vite Cyber-Automotive Cockpit HUD dashboard.
+
+================================================================================
+COMMANDS TO RUN THE APPLICATION (DIRECT SYSTEM PYTHON - NO VENV REQUIRED)
+================================================================================
+
+STEP 1: RUN THE BACKEND (API & ML ENGINE)
+--------------------------------------------------------------------------------
+Open a terminal (Command Prompt or PowerShell) and run:
+
+    cd backend
+    pip install -r requirements.txt
+    python -m uvicorn api:app --host 0.0.0.0 --port 8000 --reload
+
+The backend server is now live at:
+    http://localhost:8000
+    (Interactive API docs: http://localhost:8000/docs)
+
+--------------------------------------------------------------------------------
+STEP 2: RUN THE FRONTEND (REACT COCKPIT HUD)
+--------------------------------------------------------------------------------
+Open a SECOND terminal window and run:
+
+    cd frontend
+    npm install
+    npm run dev
+
+The React dashboard is now live with real-time hot-reloading at:
+    http://localhost:5173
+
+Open http://localhost:5173 in your browser and start monitoring!
+
+================================================================================
+EASIEST 1-CLICK OPTION (CONVENIENCE BATCH SCRIPTS):
+================================================================================
+If you prefer not typing commands:
+
+- To start the backend:  Double-click "backend/run_backend.bat"
+- To start the frontend: Double-click "frontend/run_frontend.bat"
+- Or from root folder:   Double-click "run.bat" (launches server and opens browser)
+
+================================================================================
+HOW TO TEST:
+================================================================================
+1. Live Camera Stream:
+   - Click "Live Webcam Stream" tab.
+   - Click "START MONITORING" and allow camera permissions.
+   - Look forward -> Classification: ALERT (normal safe driving).
+   - Close eyes for 1 second or yawn -> Classification: DROWSINESS (urgent siren sounds!).
+   - Look away or look down at phone for 1s -> Classification: DISTRACTION (warning chime!).
+
+2. NTHU Benchmark Videos:
+   - Click "NTHU Benchmark Videos" tab.
+   - Select any of the 4 NTHU scenarios (Subject 001, 004, 007, 012).
+   - Click "START MONITORING".
+================================================================================
